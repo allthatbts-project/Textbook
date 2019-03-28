@@ -1,0 +1,72 @@
+1. 채널ID 정리 (appsetting config에 등록)
+ - ex) BANGTANTV : UCLkAepWjdylmXSltofFvsYQ
+ 
+2. Search API 로 Video Snippet 조회 및 Insert
+ - 조회 정보 JSON Example (조회수, 추천수 등 통계 정보는 없음)
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"XpPGQXPnxQJhLgs6enD_n8JR4Qk/jg-xlV-prfWzShrPKuiODTiCj6c\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "XrTNLkqGrlc"
+   },
+   "snippet": {
+    "publishedAt": "2017-11-08T13:00:13.000Z",
+    "channelId": "UCLkAepWjdylmXSltofFvsYQ",
+    "title": "G.C.F in Tokyo (정국&amp;지민)",
+    "description": "Golden Closet Film in Tokyo with JM @ 2017 Director JK Director Of Photography JK Editor JK Actor JM (BGM : There For You - Martin Garrix, Troye Sivan)",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/XrTNLkqGrlc/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/XrTNLkqGrlc/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/XrTNLkqGrlc/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "BANGTANTV",
+    "liveBroadcastContent": "none"
+   }
+  }
+ 3. Video API 내 statistics 조회하여 Insert 된 ID에 업데이트
+ {
+   "kind": "youtube#video",
+   "etag": "\"XpPGQXPnxQJhLgs6enD_n8JR4Qk/5m2WHCq-fJNPCSjpyeQjXRrr0Y8\"",
+   "id": "XrTNLkqGrlc",
+   "statistics": {
+    "viewCount": "13577963",
+    "likeCount": "1115494",
+    "dislikeCount": "2858",
+    "favoriteCount": "0",
+    "commentCount": "93610"
+   }
+  }
+  
+  1.
+    1-1. API 호출전 마지막 저장된 데이터의 PublishedDate를 가져온다. (없으면...특정날짜 config 등록)
+    1-2. Search API 로 조회시 publishedAfter 조건에 1번의 날짜를 입력한다.
+    1-3. Search API 조회시에 nextPageToken이 Return 되는데.. (API 허용량에 따라 loop 횟수 지정해야될듯...)
+    1-4. 조회된 Video ID 리스트를 별도의 변수에 저장해놓는다. (2단계에서 사용)
+    1-5. Video 정보 Insert
+    
+  2. 
+    2-1. 별도로 저장된 Video ID 리스트
+    2-2. Video API를 통해 Video ID 리스트 의 통계 데이터를 조회 및 저장된 Video 에 Update 친다.
+    
+    완료.
+   
+    
+   
+  
+  
+  
+  
+ 
